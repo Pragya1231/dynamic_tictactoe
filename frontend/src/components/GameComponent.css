@@ -1,0 +1,237 @@
+.emoji-picker {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 40px);
+  gap: 10px;
+  justify-content: center;
+}
+
+.emoji-button {
+  font-size: 1.5rem;
+  padding: 5px;
+  background: none;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.board-wrapper {
+  margin-top: 20px;
+}
+
+.board-grid {
+  display: grid;
+  outline: 3px solid black;
+  width: fit-content;
+}
+
+.board-cell {
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+}
+
+.board-cell.dark {
+  background-color: #e2e8f0;
+}
+
+.board-cell.light {
+  background-color: #f8fafc;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #cbd5e0;
+}
+
+.board-cell.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+/* 
+.winning-cell {
+  position: relative;
+  background-color: #fef3c7;
+} */
+
+.winning-cell {
+  position: relative;
+}
+
+.winning-cell.horizontal::after,
+.winning-cell.vertical::after,
+.winning-cell.diagonal-down::after,
+.winning-cell.diagonal-up::after {
+  content: '';
+  position: absolute;
+  background-color: red;
+  z-index: 2;
+}
+
+.winning-cell.horizontal::after {
+  top: 50%;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  transform: translateY(-50%);
+}
+
+.winning-cell.vertical::after {
+  left: 50%;
+  top: 0;
+  width: 3px;
+  height: 106%;
+  transform: translateX(-50%);
+}
+
+.winning-cell.diagonal-down::after {
+  top: 0;
+  left: 0;
+  width: 144%;
+  height: 3px;
+  background-color: red;
+  transform: rotate(45deg);
+  transform-origin: left center;
+}
+
+.winning-cell.diagonal-up::after {
+  bottom: 0;
+  left: 0;
+  width: 150%;
+  height: 3px;
+  background-color: red;
+  transform: rotate(-45deg);
+  transform-origin: left center;
+}
+
+
+
+/* .winning-cell::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 10%;
+  width: 80%;
+  height: 4px;
+  background-color: #dc2626;
+  border-radius: 2px;
+} */
+
+.popup-message {
+  background-color: #facc15;
+  color: #000;
+  padding: 10px 20px;
+  margin: 10px auto;
+  width: fit-content;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #d1c687;
+  overflow-x: hidden; /* prevent horizontal scroll */
+}
+
+.game-container {
+  min-height: 100%;
+  text-align: center;
+}
+
+
+.player-row.center {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.my-player {
+  margin-top: 20px;
+}
+
+.player-item {
+  display: inline-flex; /* only takes width of content */
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.1); /* example background */
+}
+
+
+.active-turn {
+  background-color: #6fd86f;
+  border: 2px solid #4caf50;
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.board-wrapper.center {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.player-item.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  position: relative;
+}
+
+.invite-button {
+  position: absolute;
+  bottom: -10px;   /* ✅ pushes outside */
+  right: -10px;    /* ✅ pushes outside */
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 28px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.invite-button:hover {
+  transform: scale(1.1);
+  background: #45a049;
+}
+
