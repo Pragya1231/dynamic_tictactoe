@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_URL from '../api';
@@ -6,6 +6,9 @@ import JoinPrompt from './JoinPrompt';
 import './GameComponent.css';
 
 const emojiSymbols = ['🔴', '🔵', '🟢', '🟡', '🟣', '🟠', '⚫', '⚪', '⭐', '💎'];
+
+const isBoardFull = (board) =>
+  board.every((row) => row.every((cell) => typeof cell === 'string' && cell.trim() !== ''));
 
 const SymbolSelector = ({ symbols, onSelect }) => (
   <div className="emoji-picker">
@@ -41,7 +44,7 @@ const GameComponent = () => {
 
   const gameLink = `${window.location.origin}/game?board=${boardId}&players=${numPlayers}`;
 
-  const fetchGame = async () => {
+  const fetchGame = useCallback(async () => {
     try {
       const res = await axios.get(`${API_URL}/api/game/${boardId}`);
       const data = res.data;
@@ -77,20 +80,17 @@ const GameComponent = () => {
     } catch (err) {
       console.error('Error fetching game:', err);
     }
-  };
-
-  useEffect(() => {
-    fetchGame();
   }, [boardId, storedUsername]);
 
   useEffect(() => {
-    if (gameData?.deadlocked && !isBoardFull(gameData.board)) {
+    fetchGame();
+  }, [fetchGame]);
+
+  useEffect(() => {
+    if (gameData?.deadlocked && gameData.board && !isBoardFull(gameData.board)) {
       setShowEndRoundModal(true);
     }
-  }, [gameData?.deadlocked]);
-
-  const isBoardFull = (board) =>
-    board.every((row) => row.every((cell) => typeof cell === 'string' && cell.trim() !== ''));
+  }, [gameData?.deadlocked, gameData?.board]);
 
   const isWinningCell = (row, col) =>
     winningCoordinates.some(line =>
@@ -202,6 +202,10 @@ const GameComponent = () => {
           onBack={handleBack}
           username={storedUsername}
         />
+      )}
+
+      {showEmojiSelector && (
+        <SymbolSelector symbols={emojiSymbols} onSelect={handleEmojiSelect} />
       )}
 
       {gameData.currentRound && (
