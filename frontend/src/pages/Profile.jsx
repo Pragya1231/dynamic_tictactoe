@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import API_URL from "../api";
 import NavBar from "../components/NavBar.jsx";
 
 const Profile = () => {
@@ -20,7 +21,7 @@ const Profile = () => {
     }
 
     axios
-      .get(`http://localhost:8080/api/players/${storedUsername}`)
+      .get(`${API_URL}/api/players/${storedUsername}`)
       .then((res) => {
         setPlayer(res.data);
         setFormValues({
@@ -34,7 +35,7 @@ const Profile = () => {
   const handleSave = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:8080/api/players/${player.username}`,
+        `${API_URL}/api/players/${player.username}`,
         formValues
       );
       setPlayer(response.data);

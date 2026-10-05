@@ -10,7 +10,10 @@
 //
 //@RestController
 //@RequestMapping("/api/invites")
-//@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = {
+    "http://localhost:3000",
+    "https://YOUR-FRONTEND-NAME.onrender.com"
+})
 //public class GameInviteController {
 //
 //    @Autowired

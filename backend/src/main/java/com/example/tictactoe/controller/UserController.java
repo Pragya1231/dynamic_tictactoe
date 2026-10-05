@@ -10,7 +10,10 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:3000") // adjust as needed
+@CrossOrigin(origins = {
+    "http://localhost:3000",
+    "https://YOUR-FRONTEND-NAME.onrender.com"
+}) // adjust as needed
 public class UserController {
 
     @Autowired

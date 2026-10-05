@@ -1,5 +1,6 @@
 // src/components/NavBar.jsx
 import React, { useState, useRef, useEffect } from "react";
+import API_URL from "../api";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
@@ -22,7 +23,7 @@ const NavBar = () => {
     try {
       if (!username) return;
       const res = await axios.get(
-        `http://localhost:8080/api/players/all/${username}`
+        `${API_URL}/api/players/all/${username}`
       );
       setUsers(res.data.allPlayers || []);
       setFriends(res.data.myFriends || []);
@@ -35,7 +36,7 @@ const NavBar = () => {
     try {
       if (!username) return;
       const res = await axios.get(
-        `http://localhost:8080/api/notifications/outgoing/${username}`
+        `${API_URL}/api/notifications/outgoing/${username}`
       );
       setPending((res.data || []).map((n) => n.receiver));
     } catch (err) {
@@ -69,7 +70,7 @@ const NavBar = () => {
   const handleSendRequest = async (friendUsername) => {
     try {
       await axios.post(
-        `http://localhost:8080/api/notifications/send/${username}/${friendUsername}`
+        `${API_URL}/api/notifications/send/${username}/${friendUsername}`
       );
       setPending((prev) => [...prev, friendUsername]);
     } catch (err) {
@@ -80,7 +81,7 @@ const NavBar = () => {
   const handleRemoveFriend = async (friendUsername) => {
     try {
       await axios.post(
-        `http://localhost:8080/api/players/${username}/remove-friend/${friendUsername}`
+        `${API_URL}/api/players/${username}/remove-friend/${friendUsername}`
       );
       setFriends((prev) => prev.filter((f) => f !== friendUsername));
     } catch (err) {

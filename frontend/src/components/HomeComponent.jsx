@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import API_URL from "../api";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import NavBar from "./NavBar";
@@ -37,7 +38,7 @@ const HomeComponent = () => {
   const handleCreateGameOnline = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/game/create",
+        `${API_URL}/api/game/create`,
         null,
         {
           params: { players: numPlayers, username, totalRounds },
@@ -53,7 +54,7 @@ const HomeComponent = () => {
   const handleCreateGameOffline = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/game/create-offline",
+        `${API_URL}/api/game/create-offline`,
         {
           numPlayers,
           playerNames,

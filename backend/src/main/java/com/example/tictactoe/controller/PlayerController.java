@@ -15,7 +15,10 @@ import java.util.Optional;
 // PlayerController.java
 @RestController
 @RequestMapping("/api/players")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {
+    "http://localhost:3000",
+    "https://YOUR-FRONTEND-NAME.onrender.com"
+})
 public class PlayerController {
 
     @Autowired

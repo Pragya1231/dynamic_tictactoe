@@ -1,6 +1,7 @@
 // src/components/Leaderboard.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../api";
 import NavBar from "../components/NavBar.jsx";
 
 const Leaderboard = () => {
@@ -13,7 +14,7 @@ const Leaderboard = () => {
 
   const fetchLeaderboard = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/players/leaderboard");
+      const response = await axios.get(`${API_URL}/api/players/leaderboard`);
       console.log("Leaderboard data:", response.data);
       setPlayers(response.data);
     } catch (error) {

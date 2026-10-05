@@ -18,7 +18,10 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/game")
-@CrossOrigin(origins = "http://localhost:3000") // allow React app to connect
+@CrossOrigin(origins = {
+    "http://localhost:3000",
+    "https://YOUR-FRONTEND-NAME.onrender.com"
+}) // allow React app to connect
 public class GameBoardController {
 
     @Autowired

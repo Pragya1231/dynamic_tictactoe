@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_URL from '../api';
 import JoinPrompt from './JoinPrompt';
 import './GameComponent.css';
 
@@ -42,7 +43,7 @@ const GameComponent = () => {
 
   const fetchGame = async () => {
     try {
-      const res = await axios.get(`http://localhost:8080/api/game/${boardId}`);
+      const res = await axios.get(`${API_URL}/api/game/${boardId}`);
       const data = res.data;
       setGameData(data);
       setWinningCoordinates(data.winningCoordinates || []);
@@ -115,7 +116,7 @@ const GameComponent = () => {
         localStorage.setItem('username', username);
       }
 
-      await axios.post(`http://localhost:8080/api/game/join`, {
+      await axios.post(`${API_URL}/api/game/join`, {
         boardId,
         username,
       });
@@ -129,7 +130,7 @@ const GameComponent = () => {
 
   const handleEndRound = async () => {
     try {
-      await axios.post(`http://localhost:8080/api/game/${boardId}/end-round`);
+      await axios.post(`${API_URL}/api/game/${boardId}/end-round`);
       setShowEndRoundModal(false);
       fetchGame();
     } catch (err) {
@@ -151,7 +152,7 @@ const GameComponent = () => {
 
   const handleEmojiSelect = async (symbol) => {
     try {
-      await axios.post('http://localhost:8080/api/game/choose-symbol', {
+      await axios.post(`${API_URL}/api/game/choose-symbol`, {
         boardId,
         username: storedUsername,
         symbol,
@@ -172,7 +173,7 @@ const GameComponent = () => {
     if (isFilled) return;
 
     try {
-      await axios.post(`http://localhost:8080/api/game/move`, {
+      await axios.post(`${API_URL}/api/game/move`, {
         boardId,
         row,
         col,

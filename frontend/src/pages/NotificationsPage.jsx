@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../api";
 import NavBar from "../components/NavBar";
 
 const NotificationsPage = () => {
@@ -9,7 +10,7 @@ const NotificationsPage = () => {
   useEffect(() => {
     if (username) {
       axios
-        .get(`http://localhost:8080/api/notifications/${username}`)
+        .get(`${API_URL}/api/notifications/${username}`)
         .then((res) => setNotifications(res.data))
         .catch((err) => console.error("Error fetching notifications:", err));
     }
@@ -18,7 +19,7 @@ const NotificationsPage = () => {
   const handleAction = async (id, action) => {
     try {
       await axios.post(
-        `http://localhost:8080/api/notifications/${id}/${action}`
+        `${API_URL}/api/notifications/${id}/${action}`
       );
       setNotifications((prev) =>
         prev.map((n) =>

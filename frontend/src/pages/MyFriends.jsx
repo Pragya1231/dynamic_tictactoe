@@ -1,6 +1,7 @@
 // src/pages/MyFriends.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../api";
 import NavBar from "../components/NavBar.jsx";
 import { useSearchParams } from "react-router-dom";
 
@@ -15,7 +16,7 @@ const MyFriends = () => {
   useEffect(() => {
     if (username) {
       axios
-        .get(`http://localhost:8080/api/players/all/${username}`)
+        .get(`${API_URL}/api/players/all/${username}`)
         .then((res) => setFriends(res.data.myFriends || []))
         .catch((err) => console.error("Error fetching friends:", err));
     }
@@ -23,8 +24,8 @@ const MyFriends = () => {
 
   const handleRemoveFriend = async (friendUsername) => {
     try {
-      await axios.delete(
-        `http://localhost:8080/api/players/${username}/remove-friend/${friendUsername}`
+      await axios.post(
+        `${API_URL}/api/players/${username}/remove-friend/${friendUsername}`
       );
       setFriends((prev) => prev.filter((f) => f !== friendUsername));
     } catch (err) {
@@ -34,7 +35,7 @@ const MyFriends = () => {
 
   const handleInviteFriend = async (friendUsername) => {
     try {
-      await axios.post("http://localhost:8080/api/notifications/invite", {
+      await axios.post(`${API_URL}/api/notifications/invite`, {
         sender: username,
         receiver: friendUsername,
         boardId: inviteGameId,
