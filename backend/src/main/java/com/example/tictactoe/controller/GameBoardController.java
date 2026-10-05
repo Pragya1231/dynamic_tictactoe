@@ -20,7 +20,7 @@ import java.util.*;
 @RequestMapping("/api/game")
 @CrossOrigin(origins = {
     "http://localhost:3000",
-    "https://YOUR-FRONTEND-NAME.onrender.com"
+    "https://playspheregame.vercel.app/"
 }) // allow React app to connect
 public class GameBoardController {
 

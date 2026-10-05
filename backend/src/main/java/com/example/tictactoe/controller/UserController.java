@@ -12,7 +12,7 @@ import java.util.*;
 @RequestMapping("/api/users")
 @CrossOrigin(origins = {
     "http://localhost:3000",
-    "https://YOUR-FRONTEND-NAME.onrender.com"
+    "https://playspheregame.vercel.app/"
 }) // adjust as needed
 public class UserController {
 
