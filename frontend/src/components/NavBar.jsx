@@ -20,34 +20,25 @@ const NavBar = () => {
   const username = localStorage.getItem("username");
 
   useEffect(() => {
-    const fetchUsersAndFriends = async () => {
-      try {
-        if (!username) return;
-        const res = await axios.get(
-          `${API_URL}/api/players/all/${username}`
-        );
-        setUsers(res.data.allPlayers || []);
-        setFriends(res.data.myFriends || []);
-      } catch (err) {
-        console.error("Error fetching users:", err);
-      }
-    };
+  const fetchData = async () => {
+    if (!username) return;
 
-    const fetchPending = async () => {
-      try {
-        if (!username) return;
-        const res = await axios.get(
-          `${API_URL}/api/notifications/outgoing/${username}`
-        );
-        setPending((res.data || []).map((n) => n.receiver));
-      } catch (err) {
-        console.error("Error fetching outgoing requests:", err);
-      }
-    };
+    try {
+      const [usersRes, pendingRes] = await Promise.all([
+        axios.get(`${API_URL}/api/players/all/${username}`),
+        axios.get(`${API_URL}/api/notifications/outgoing/${username}`)
+      ]);
 
-    fetchUsersAndFriends();
-    fetchPending();
-  }, [username]);
+      setUsers(usersRes.data.allPlayers || []);
+      setFriends(usersRes.data.myFriends || []);
+      setPending((pendingRes.data || []).map((n) => n.receiver));
+    } catch (err) {
+      console.error("Error fetching users/friends/requests:", err);
+    }
+  };
+
+  fetchData();
+}, [username]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {

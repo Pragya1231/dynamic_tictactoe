@@ -86,11 +86,11 @@ const GameComponent = () => {
     fetchGame();
   }, [fetchGame]);
 
-  useEffect(() => {
-    if (gameData?.deadlocked && gameData.board && !isBoardFull(gameData.board)) {
-      setShowEndRoundModal(true);
-    }
-  }, [gameData?.deadlocked, gameData?.board]);
+ useEffect(() => {
+  if (gameData?.deadlocked && gameData.board && !isBoardFull(gameData.board)) {
+    setShowEndRoundModal(true);
+  }
+}, [gameData]);
 
   const isWinningCell = (row, col) =>
     winningCoordinates.some(line =>
